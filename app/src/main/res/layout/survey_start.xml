@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/devil"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/onestore"
+        android:text="자, 설문을 시작하지.\n한 번 선택하면\n돌이킬 수 없다!"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:background="#F8730A"
+        android:paddingTop="7dp"
+        android:backgroundTint="#F8730A"
+        android:fontFamily="@font/kopubworld_dotum_pro_medium"
+        android:gravity="center_horizontal"
+        android:text="설문 시작"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+</LinearLayout>
