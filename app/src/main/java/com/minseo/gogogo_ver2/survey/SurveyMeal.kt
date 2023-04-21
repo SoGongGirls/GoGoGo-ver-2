@@ -6,6 +6,7 @@ import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.minseo.gogogo_ver2.Roulette
 import com.minseo.gogogo_ver2.databinding.SurveyMealBinding
 import java.util.ArrayList
 
@@ -38,14 +39,15 @@ class SurveyMeal : AppCompatActivity() {
     }
 
     fun selectThree(view: View?) {
-        var pick = mutableListOf<String>()
-        pick.add("훠궈")
-        pick.add("쌀국수")
-        pick.add("타코")
-        pick.add("마라탕")
+        var pick: Array<String> = Array(4, { "0" })
+        pick[0] = "훠궈"
+        pick[1] = "쌀국수"
+        pick[2] = "타코"
+        pick[3] = "마라탕"
 
-//        val intent = Intent(applicationContext, Roulette::class.java)
-//        startActivity(intent)
+        val intent = Intent(applicationContext, Roulette::class.java)
+        intent.putExtra("pick", pick)
+        startActivity(intent)
     }
 
     fun selectFour(view: View?) {

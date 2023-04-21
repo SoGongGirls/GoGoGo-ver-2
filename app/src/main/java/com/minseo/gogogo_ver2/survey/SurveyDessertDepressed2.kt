@@ -1,10 +1,12 @@
 package com.minseo.gogogo_ver2.survey
 
+import android.content.Intent
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.minseo.gogogo_ver2.Roulette
 import com.minseo.gogogo_ver2.databinding.SurveyDessertDepressed2Binding
 
 class SurveyDessertDepressed2 : AppCompatActivity() {
@@ -22,21 +24,25 @@ class SurveyDessertDepressed2 : AppCompatActivity() {
     }
 
     fun selectTwelve(view: View?) {
-        var pick = mutableListOf<String>()
-        pick.add("그릭요거트")
-        pick.add("플레인요거트")
-        pick.add("딸기요거트")
-        pick.add("블루베리요거트")
-//        val intent = Intent(applicationContext, Roulette::class.java)
-//        startActivity(intent)
+        var pick: Array<String> = Array(4, { "0" })
+        pick[0] = "그릭요거트"
+        pick[1] = "플레인요거트"
+        pick[2] = "딸기요거트"
+        pick[3] = "블루베리요거트"
+
+        val intent = Intent(applicationContext, Roulette::class.java)
+        intent.putExtra("pick", pick)
+        startActivity(intent)
     }
 
     fun selectThirteen(view: View?) {
-        var pick = mutableListOf<String>()
-        pick.add("망고주스")
-        pick.add("오렌지주스")
-        pick.add("수박주스")
-//        val intent = Intent(applicationContext, Roulette::class.java)
-//        startActivity(intent)
+        var pick: Array<String> = Array(3, { "0" })
+        pick[0] = "망고주스"
+        pick[1] = "오렌지주스"
+        pick[2] = "수박주스"
+
+        val intent = Intent(applicationContext, Roulette::class.java)
+        intent.putExtra("pick", pick)
+        startActivity(intent)
     }
 }

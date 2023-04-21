@@ -25,6 +25,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name="com.minseo.gogogo_ver2.Roulette" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMeal" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertGood" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertBad" />
