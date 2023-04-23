@@ -1,85 +1,60 @@
 package com.minseo.gogogo_ver2.survey
 
-import android.content.Intent
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import com.minseo.gogogo_ver2.Roulette
-import com.minseo.gogogo_ver2.databinding.SurveyMealMeatBinding
+import android.view.ViewGroup
+import com.minseo.gogogo_ver2.R
 
-class SurveyMealMeat : AppCompatActivity() {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [SurveyMealMeat.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class SurveyMealMeat : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var binding = SurveyMealMeatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // 이미지뷰 동그랗게
-        binding.select1.background = ShapeDrawable(OvalShape())
-        binding.select1.clipToOutline = true
-        binding.select2.background = ShapeDrawable(OvalShape())
-        binding.select2.clipToOutline = true
-        binding.select3.background = ShapeDrawable(OvalShape())
-        binding.select3.clipToOutline = true
-        binding.select4.background = ShapeDrawable(OvalShape())
-        binding.select4.clipToOutline = true
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
     }
 
-    fun selectOne(view: View?) {
-        var pick: Array<String> = Array(6, { "0" })
-        pick[0] = "삼겹살"
-        pick[1] = "막창"
-        pick[2] = "탕수육"
-        pick[3] = "족발"
-        pick[4] = "보쌈"
-        pick[5] = "돈까스"
-
-        val intent = Intent(applicationContext, Roulette::class.java)
-        intent.putExtra("pick", pick)
-        startActivity(intent)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.survey_meal_meat, container, false)
     }
 
-    fun selectTwo(view: View?) {
-        var pick: Array<String> = Array(6, { "0" })
-        pick[0] = "스테이크"
-        pick[1] = "육회"
-        pick[2] = "샤브샤브"
-        pick[3] = "곱창"
-        pick[4] = "소고기구이"
-        pick[5] = "갈비"
-
-        val intent = Intent(applicationContext, Roulette::class.java)
-        intent.putExtra("pick", pick)
-        startActivity(intent)
-    }
-
-    fun selectThree(view: View?) {
-        var pick: Array<String> = Array(6, { "0" })
-        pick[0] = "닭백숙"
-        pick[1] = "치킨"
-        pick[2] = "닭도리탕"
-        pick[3] = "찜닭"
-        pick[4] = "닭발"
-        pick[5] = "닭갈비"
-
-        val intent = Intent(applicationContext, Roulette::class.java)
-        intent.putExtra("pick", pick)
-        startActivity(intent)
-    }
-
-    fun selectFour(view: View?) {
-        var pick: Array<String> = Array(6, { "0" })
-        pick[0] = "오리탕"
-        pick[1] = "염소고기"
-        pick[2] = "양고기"
-        pick[3] = "오돌뼈"
-        pick[4] = "오리구이"
-        pick[5] = "오리주물럭"
-
-        val intent = Intent(applicationContext, Roulette::class.java)
-        intent.putExtra("pick", pick)
-        startActivity(intent)
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment SurveyMealMeat.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            SurveyMealMeat().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
     }
 }

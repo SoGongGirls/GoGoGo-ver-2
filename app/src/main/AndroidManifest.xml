@@ -25,15 +25,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".storeInfo.StoreRecommend"/>
         <activity android:name="com.minseo.gogogo_ver2.Roulette" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMeal" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertGood" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertBad" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertDepressed" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertAngry" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertSad" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessert" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyStart2" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyStart" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMealMeat" />
         <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMealFish" />

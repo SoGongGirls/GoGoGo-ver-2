@@ -25,7 +25,7 @@
         app:rouletteTextColor="@android:color/black"
         app:centerPointColor="@color/black"
         app:topMarkerColor="@color/black"
-        app:topMarkerVisibility="visible"
+        app:topMarkerVisibility="invisible"
         app:emptyMessage="Jhdroid"
         app:layout_constraintBottom_toTopOf="@+id/button_layout"
         app:layout_constraintEnd_toEndOf="parent"

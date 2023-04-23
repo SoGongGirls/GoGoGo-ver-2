@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/surveyStart1">
+
+    <fragment
+        android:id="@+id/surveyStart1"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyStart1"
+        android:label="fragment_survey_start1"
+        tools:layout="@layout/survey_start1" >
+        <action
+            android:id="@+id/action_surveyStart1_to_surveyStart2"
+            app:destination="@id/surveyStart2" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyStart2"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyStart2"
+        android:label="survey_start2"
+        tools:layout="@layout/survey_start2" >
+        <action
+            android:id="@+id/action_surveyStart2_to_surveyMeal"
+            app:destination="@id/surveyMeal" />
+        <action
+            android:id="@+id/action_surveyStart2_to_surveyDessert"
+            app:destination="@id/surveyDessert" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyMeal"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyMeal"
+        android:label="SurveyMeal"
+        tools:layout="@layout/survey_meal"/>
+    <fragment
+        android:id="@+id/surveyDessert"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyDessert"
+        android:label="SurveyDessert"
+        tools:layout="@layout/survey_dessert"/>
+    <fragment
+        android:id="@+id/surveyMealFish"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyMealFish"
+        android:label="SurveyMealFish"
+        tools:layout="@layout/survey_meal_fish"/>
+    <fragment
+        android:id="@+id/surveyMealElse"
+        android:name="com.minseo.gogogo_ver2.survey.SurveyMealElse"
+        android:label="SurveyMealElse"
+        tools:layout="@layout/survey_meal_else"/>
+
+</navigation>
