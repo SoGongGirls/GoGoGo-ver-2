@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.Roulette">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.minseo.gogogo_ver2.view_model.SurveyViewModel" />
+
+        <variable
+            name="roulette"
+            type="com.minseo.gogogo_ver2.view.Roulette" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/rotate_result_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴 추천 결과! : "
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/roulette"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.jhdroid.view.Roulette
+            android:id="@+id/roulette"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:rouletteSize="6"
+            app:rouletteTextSize="25sp"
+            app:rouletteTextColor="@android:color/black"
+            app:centerPointColor="@color/black"
+            app:topMarkerColor="@color/black"
+            app:topMarkerVisibility="invisible"
+            app:emptyMessage="Jhdroid"
+            app:layout_constraintBottom_toTopOf="@+id/button_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rotate_result_tv" />
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rotate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="룰렛 돌리기"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/result_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="내 주변 매장"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rotate_btn" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

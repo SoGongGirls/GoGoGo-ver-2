@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".survey.SurveyMeal">
+    tools:context=".view.survey.SurveyMeal">
 
     <data>
         <variable
             name="surveyMeal"
-            type="com.minseo.gogogo_ver2.survey.SurveyMeal" />
+            type="com.minseo.gogogo_ver2.view.survey.SurveyMeal" />
     </data>
 
     <LinearLayout
@@ -81,7 +81,7 @@
                     android:id="@+id/bt_fish"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectTwo"
+                    android:onClick="@{() -> surveyMeal.pickFish()}"
                     app:srcCompat="@drawable/seafood"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -95,7 +95,6 @@
                     android:textSize="20dp"
                     android:text="해산물" />
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +115,7 @@
                     android:id="@+id/bt_exotic"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectThree"
+                    android:onClick="@{() -> surveyMeal.pickExotic()}"
                     app:srcCompat="@drawable/mara" />
 
                 <TextView
@@ -141,7 +140,7 @@
                     android:id="@+id/bt_else"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectFour"
+                    android:onClick="@{() -> surveyMeal.pickElse()}"
                     app:srcCompat="@drawable/tteokbokki"
                     tools:ignore="SpeakableTextPresentCheck" />
 

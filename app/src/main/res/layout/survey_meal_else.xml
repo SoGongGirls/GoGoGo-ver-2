@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".survey.SurveyMealMeat">
+    tools:context=".view.survey.SurveyMealElse">
 
     <data>
         <variable
-            name="surveyMeat"
-            type="com.minseo.gogogo_ver2.survey.SurveyMealMeat" />
+            name="surveyElse"
+            type="com.minseo.gogogo_ver2.view.survey.SurveyMealElse" />
     </data>
 
     <LinearLayout
@@ -52,15 +52,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/select1"
+                    android:id="@+id/bt_one"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectOne"
+                    android:onClick="@{() -> surveyElse.pickOne()}"
                     app:srcCompat="@drawable/hamburger"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
-                    android:id="@+id/select1_tv"
+                    android:id="@+id/tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kopubworld_dotum_pro_medium"
@@ -78,15 +78,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/select2"
+                    android:id="@+id/bt_two"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectTwo"
+                    android:onClick="@{() -> surveyElse.pickTwo()}"
                     app:srcCompat="@drawable/ramen"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
-                    android:id="@+id/select2_tv"
+                    android:id="@+id/tv_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kopubworld_dotum_pro_medium"
@@ -113,14 +113,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/select3"
+                    android:id="@+id/bt_three"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectThree"
+                    android:onClick="@{() -> surveyElse.pickThree()}"
                     app:srcCompat="@drawable/rice1" />
 
                 <TextView
-                    android:id="@+id/select3_tv"
+                    android:id="@+id/tv_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kopubworld_dotum_pro_medium"
@@ -138,15 +138,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/select4"
+                    android:id="@+id/bt_four"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="selectFour"
+                    android:onClick="@{() -> surveyElse.pickFour()}"
                     app:srcCompat="@drawable/tteokbokki"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
-                    android:id="@+id/select4_tv"
+                    android:id="@+id/tv_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kopubworld_dotum_pro_medium"

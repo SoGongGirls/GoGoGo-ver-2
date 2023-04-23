@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/surveyStart1"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyStart1"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyStart1"
         android:label="fragment_survey_start1"
         tools:layout="@layout/survey_start1" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/surveyStart2"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyStart2"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyStart2"
         android:label="survey_start2"
         tools:layout="@layout/survey_start2" >
         <action
@@ -28,23 +28,161 @@
     </fragment>
     <fragment
         android:id="@+id/surveyMeal"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyMeal"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMeal"
         android:label="SurveyMeal"
-        tools:layout="@layout/survey_meal"/>
+        tools:layout="@layout/survey_meal">
+        <action
+            android:id="@+id/action_surveyMeal_to_surveyMealMeat"
+            app:destination="@id/surveyMealMeat" />
+        <action
+            android:id="@+id/action_surveyMeal_to_surveyMealFish"
+            app:destination="@id/surveyMealFish" />
+        <action
+            android:id="@+id/action_surveyMeal_to_surveyMealElse"
+            app:destination="@id/surveyMealElse" />
+        <action
+            android:id="@+id/action_surveyMeal_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
     <fragment
         android:id="@+id/surveyDessert"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyDessert"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessert"
         android:label="SurveyDessert"
-        tools:layout="@layout/survey_dessert"/>
+        tools:layout="@layout/survey_dessert">
+        <action
+            android:id="@+id/action_surveyDessert_to_surveyDessertGood"
+            app:destination="@id/surveyDessertGood" />
+        <action
+            android:id="@+id/action_surveyDessert_to_surveyDessertBad"
+            app:destination="@id/surveyDessertBad" />
+    </fragment>
     <fragment
         android:id="@+id/surveyMealFish"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyMealFish"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealFish"
         android:label="SurveyMealFish"
-        tools:layout="@layout/survey_meal_fish"/>
+        tools:layout="@layout/survey_meal_fish">
+        <action
+            android:id="@+id/action_surveyMealFish_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
     <fragment
         android:id="@+id/surveyMealElse"
-        android:name="com.minseo.gogogo_ver2.survey.SurveyMealElse"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealElse"
         android:label="SurveyMealElse"
-        tools:layout="@layout/survey_meal_else"/>
+        tools:layout="@layout/survey_meal_else">
+        <action
+            android:id="@+id/action_surveyMealElse_to_roulette"
+            app:destination="@id/roulette" />
+        <action
+            android:id="@+id/action_surveyMealElse_to_surveyMealRice"
+            app:destination="@id/surveyMealRice" />
+        <action
+            android:id="@+id/action_surveyMealElse_to_surveyMealNoodle"
+            app:destination="@id/surveyMealNoodle" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyMealMeat"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealMeat"
+        android:label="survey_meal_meat"
+        tools:layout="@layout/survey_meal_meat" >
+        <action
+            android:id="@+id/action_surveyMealMeat_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertGood"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertGood"
+        android:label="SurveyDessertGood"
+        tools:layout="@layout/survey_dessert_good">
+        <action
+            android:id="@+id/action_surveyDessertGood_to_surveyDessertHot"
+            app:destination="@id/surveyDessertHot" />
+        <action
+            android:id="@+id/action_surveyDessertGood_to_surveyDessertCold"
+            app:destination="@id/surveyDessertCold" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertBad"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertBad"
+        android:label="SurveyDessertBad"
+        tools:layout="@layout/survey_dessert_bad">
+        <action
+            android:id="@+id/action_surveyDessertBad_to_surveyDessertAngry"
+            app:destination="@id/surveyDessertAngry" />
+        <action
+            android:id="@+id/action_surveyDessertBad_to_surveyDessertDepressed"
+            app:destination="@id/surveyDessertDepressed" />
+        <action
+            android:id="@+id/action_surveyDessertBad_to_surveyDessertSad"
+            app:destination="@id/surveyDessertSad" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertAngry"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertAngry"
+        android:label="SurveyDessertAngry"
+        tools:layout="@layout/survey_dessert_angry">
+        <action
+            android:id="@+id/action_surveyDessertAngry_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertDepressed"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertDepressed"
+        android:label="SurveyDessertDepressed"
+        tools:layout="@layout/survey_dessert_depressed">
+        <action
+            android:id="@+id/action_surveyDessertDepressed_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertSad"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertSad"
+        android:label="SurveyDessertSad"
+        tools:layout="@layout/survey_dessert_sad">
+        <action
+            android:id="@+id/action_surveyDessertSad_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/roulette"
+        android:name="com.minseo.gogogo_ver2.view.Roulette"
+        android:label="roulette"
+        tools:layout="@layout/roulette" />
+    <fragment
+        android:id="@+id/surveyMealRice"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealRice"
+        android:label="survey_meal_rice"
+        tools:layout="@layout/survey_meal_rice" >
+        <action
+            android:id="@+id/action_surveyMealRice_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyMealNoodle"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealNoodle"
+        android:label="survey_meal_noodle"
+        tools:layout="@layout/survey_meal_noodle" >
+        <action
+            android:id="@+id/action_surveyMealNoodle_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertHot"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertHot"
+        android:label="survey_dessert_hot"
+        tools:layout="@layout/survey_dessert_hot" >
+        <action
+            android:id="@+id/action_surveyDessertHot_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveyDessertCold"
+        android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertCold"
+        android:label="survey_dessert_cold"
+        tools:layout="@layout/survey_dessert_cold" >
+        <action
+            android:id="@+id/action_surveyDessertCold_to_roulette"
+            app:destination="@id/roulette" />
+    </fragment>
 
 </navigation>

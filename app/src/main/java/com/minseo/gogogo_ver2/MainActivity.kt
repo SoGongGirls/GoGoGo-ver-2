@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.minseo.gogogo_ver2.databinding.ActivityMainBinding
-import com.minseo.gogogo_ver2.fragment.Fragment1
-import com.minseo.gogogo_ver2.fragment.Fragment2
-import com.minseo.gogogo_ver2.fragment.Fragment3
+import com.minseo.gogogo_ver2.view.fragment.Fragment1
+import com.minseo.gogogo_ver2.view.fragment.Fragment2
+import com.minseo.gogogo_ver2.view.fragment.Fragment3
 
 private const val TAG_FRAGMENT_1 = "fragment1"
 private const val TAG_FRAGMENT_2 = "fragment2"

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".survey.SurveyStart1">
+    tools:context=".view.survey.SurveyStart1">
+
+    <data>
+        <variable
+            name="surveyStart"
+            type="com.minseo.gogogo_ver2.view.survey.SurveyStart1" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,6 +44,5 @@
             android:text="설문 시작"
             android:textColor="#ffffff"
             android:textSize="20dp" />
-
     </LinearLayout>
-</FrameLayout>
+</layout>

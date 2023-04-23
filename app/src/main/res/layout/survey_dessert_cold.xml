@@ -2,24 +2,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.survey.SurveyStart2">
+    tools:context=".view.survey.SurveyDessertCold">
 
     <data>
         <variable
-            name="surveyStart2"
-            type="com.minseo.gogogo_ver2.view.survey.SurveyStart2" />
+            name="surveyGoodCold"
+            type="com.minseo.gogogo_ver2.view.survey.SurveyDessertCold" />
     </data>
 
     <LinearLayout
-        android:id="@+id/nav_host_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/question2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Q. 배고파 VS 허전해"
+            android:text="Q. 맛 VS 칼로리"
+            android:textStyle="bold"
+            android:fontFamily="@font/kopubworld_dotum_pro_medium"
             android:layout_marginTop="70dp"
             android:textSize="25dp"
             android:textColor="#000000"
@@ -29,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="사진을 클릭해주세요"
+            android:fontFamily="@font/kopubworld_dotum_pro_medium"
             android:textSize="17dp"
             android:textColor="#8c8c8c"
             android:layout_marginTop="10dp"
@@ -49,19 +52,21 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/bt_meal"
+                    android:id="@+id/bt_taste"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="@{() -> surveyStart2.pickMeal()}"
-                    app:srcCompat="@drawable/chicken" />
+                    android:onClick="@{() -> surveyGoodCold.pickTaste()}"
+                    app:srcCompat="@drawable/fiona_monster" />
 
                 <TextView
+                    android:id="@+id/select5_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/kopubworld_dotum_pro_medium"
                     android:layout_marginTop="5dp"
                     android:textColor="#666666"
                     android:textSize="20dp"
-                    android:text="배고파" />
+                    android:text="맛" />
             </LinearLayout>
 
             <LinearLayout
@@ -72,20 +77,23 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/bt_dessert"
+                    android:id="@+id/bt_diet"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:onClick="@{() -> surveyStart2.pickDessert()}"
-                    app:srcCompat="@drawable/macaroon" />
+                    android:onClick="@{() -> surveyGoodCold.pickDiet()}"
+                    app:srcCompat="@drawable/fiona_person" />
 
                 <TextView
+                    android:id="@+id/select6_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/kopubworld_dotum_pro_medium"
                     android:layout_marginTop="5dp"
                     android:textColor="#666666"
                     android:textSize="20dp"
-                    android:text="허전해" />
+                    android:text="칼로리" />
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </layout>

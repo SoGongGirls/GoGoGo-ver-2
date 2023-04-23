@@ -25,19 +25,19 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".storeInfo.StoreRecommend"/>
-        <activity android:name="com.minseo.gogogo_ver2.Roulette" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertGood" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertBad" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertDepressed" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertAngry" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertSad" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyStart" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMealMeat" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMealFish" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyMealElse" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertDepressed2" />
-        <activity android:name="com.minseo.gogogo_ver2.survey.SurveyDessertSad2" />
+        <activity android:name=".view.storeInfo.StoreRecommend"/>
+        <activity android:name="com.minseo.gogogo_ver2.view.Roulette" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertGood" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertBad" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertDepressed" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertAngry" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertSad" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyStart" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealMeat" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealFish" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyMealElse" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertDepressed2" />
+        <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyDessertSad2" />
     </application>
 
 </manifest>
