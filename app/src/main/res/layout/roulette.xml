@@ -11,7 +11,7 @@
 
         <variable
             name="roulette"
-            type="com.minseo.gogogo_ver2.view.Roulette" />
+            type="com.jhdroid.view.Roulette" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
