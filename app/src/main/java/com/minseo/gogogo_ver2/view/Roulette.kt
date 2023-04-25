@@ -8,10 +8,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.jhdroid.view.RotateListener
+import com.jhdroid.view.Roulette
+import com.jhdroid.view.Roulette.Companion.ROULETTE_MAX_SIZE
+import com.jhdroid.view.Roulette.Companion.ROULETTE_MIN_SIZE
+import com.minseo.gogogo_ver2.R
+import com.minseo.gogogo_ver2.databinding.ActivityMainBinding
 import com.minseo.gogogo_ver2.databinding.RouletteBinding
+import com.minseo.gogogo_ver2.view.storeInfo.StoreRecommend
 import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 
 class Roulette : Fragment() {
@@ -40,26 +49,23 @@ class Roulette : Fragment() {
         binding = fragmentBinding
 
         binding.roulette.apply {
-            rouletteSize = 6
+            rouletteSize = rouletteData.size
             setRouletteDataList(rouletteData)
         }
 
         binding.rotateBtn.setOnClickListener { rotateRoulette() }
 
         // 내 주변 매장 확인하기
-//        binding.resultBtn.setOnClickListener {
-//            val intent = Intent(applicationContext, StoreRecommend::class.java)
-//            intent.putExtra("result", binding.rotateResultTv.text)
-//            startActivity(intent)
-//        }
+        binding.resultBtn.setOnClickListener {
+            sharedViewModel.setRoulette(binding.rotateResultTv.text as String)
+            findNavController().navigate(R.id.action_roulette_to_storeRecommend)
+        }
 
         return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.roulette = this   // error!
-
     }
 
     private fun rotateRoulette() {

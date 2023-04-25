@@ -42,7 +42,7 @@ class SurveyMealMeat : Fragment() {
     }
 
     fun pickPork() {
-        var menu = arrayListOf("삼겹살", "막창", "탕수육", "족발", "보쌈", "돈까스")
+        var menu = arrayListOf("삼겹살", "탕수육", "족발", "보쌈", "돈까스")
         sharedViewModel.setPick(menu)
         findNavController().navigate(R.id.action_surveyMealMeat_to_roulette)
     }

@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.minseo.gogogo_ver2.view_model.SurveyViewModel" />
-
-        <variable
-            name="roulette"
-            type="com.jhdroid.view.Roulette" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

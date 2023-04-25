@@ -1,37 +1,84 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ListView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.minseo.gogogo_ver2.DatabaseHelper
+import com.minseo.gogogo_ver2.R
+import com.minseo.gogogo_ver2.databinding.StoreListBinding
+import com.minseo.gogogo_ver2.databinding.SurveyMealBinding
 import java.util.*
 import kotlin.Comparator
+import kotlin.collections.ArrayList
 
 class StoreList : Fragment() {
-//    lateinit var binding: StoreListBinding
-//    var database: SQLiteDatabase? = null
-//    var storeList: ListView? = null
-//    var adapter: StoreListAdapter? = null
-//    var menuList = arrayOfNulls<String>(5)
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        binding = StoreListBinding.inflate(inflater, container, false)
-//
-////        openDB()
-//
-//        // 리스트뷰 참조 및 Adapter 연결
+    lateinit var binding: StoreListBinding
+
+    val database = Firebase.database
+    val myRef = database.getReference("store")
+
+    lateinit var storeList: ArrayList<StoreItem>
+    lateinit var adapter: StoreListAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val fragmentBinding = StoreListBinding.inflate(inflater, container, false)
+        binding = fragmentBinding
+
+        storeList = ArrayList()
+
+        var storeLv = binding.list
+        adapter = StoreListAdapter(storeList)
+        storeLv.adapter = adapter
+
+        myRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children) {
+                    when {
+                        "삼겹살".equals(ds.key) -> {
+                            val f1 = snapshot.child("삼겹살")
+                            for (item in f1.children) {
+                                val id : String = item.key.toString()
+                                val name : String = item.child("name").value as String
+                                val degree : Double = item.child("degree").value as Double
+                                val logo : String = item.child("logo").value as String
+                                val latitude : Double = item.child("latitude").value as Double
+                                val longitude : Double = item.child("longitude").value as Double
+
+                                val f1m = StoreItem(id, name, degree, logo, latitude, longitude)
+                                storeList.add(f1m)
+                            }
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // 읽어오기에 실패했을 때
+            }
+        })
+
+//        openDB()
+
+        // 리스트뷰 참조 및 Adapter 연결
 //        adapter = StoreListAdapter(activity)
 //        adapter!!.removeItemAll()
-//
-//        // 맨 처음 초기화 데이터 보여주기 (select)
+
+        // 맨 처음 초기화 데이터 보여주기 (select)
 //        if (database != null) {
 //            val tableName = "store_data"
 //            val query = "select name, degree, id, logo, latitude, longitude, menu from $tableName"
@@ -56,8 +103,8 @@ class StoreList : Fragment() {
 //            Log.e("test", "selectData() db없음.")
 //        }
 //        binding.list.adapter = adapter
-//
-//
+
+
 //        // 리스트 정렬 기능
 //        binding.button5.isSelected = true // 기본순 버튼 눌린 상태로 유지
 //
@@ -102,33 +149,22 @@ class StoreList : Fragment() {
 //                intent.putExtra("id", id)
 //                startActivity(intent)
 //            }
-//        return binding.root
+        return fragmentBinding.root
     }
 
-    //    @Override
-    //    public void onListItemClick (ListView l, View v, int position, long id) {
-    //        StoreItem item = (StoreItem) l.getItemAtPosition(position) ;
-    //
-    //        String nameStr = item.getStoreName();
-    //        String gradeStr = item.getStoreGrade();
-    ////        double distanceStr = item.getStoreDistance();
-    //        String logoStr = item.getStoreLogo();
-    //
-    //    }
-    //    public void addItem(Drawable image, String name, String grade, String distance) {
-    //        adapter.addItem(image, name, grade, distance);
-    //    }
-//    fun openDB() {
-//        Log.v("test", "openDB() 실행")
-//        val helper = DatabaseHelper(context)
-//        database = helper.writableDatabase
+//    @Override
+//    public void onListItemClick (ListView l, View v, int position, long id) {
+//        StoreItem item = (StoreItem) l.getItemAtPosition(position) ;
 //
+//        String nameStr = item.getStoreName();
+//        String gradeStr = item.getStoreGrade();
+//    //        double distanceStr = item.getStoreDistance();
+//        String logoStr = item.getStoreLogo();
 //
-//        //Log.v(Double.toString(myLatitude), "위도");
-//        if (database != null) {
-//            Log.v("test", "DB 열기 성공!")
-//        } else {
-//            Log.e("test", "DB 열기 실패!")
-//        }
 //    }
-//}
+//
+//    public void addItem(Drawable image, String name, String grade, String distance) {
+//        adapter.addItem(image, name, grade, distance);
+//    }
+
+}

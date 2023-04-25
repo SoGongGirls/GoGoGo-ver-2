@@ -5,20 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.TextView
+import com.minseo.gogogo_ver2.R
 
-class StoreListAdapter(context: Context?) : BaseAdapter() {
-    var mContext: Context? = null
-    var mLayoutInflater: LayoutInflater? = null
-
-    init {
-        mContext = context
-        mLayoutInflater = LayoutInflater.from(mContext)
-    }
-
-    fun addItem(item: StoreItem) {
-        items.add(item)
-    }
-
+class StoreListAdapter(_items: ArrayList<StoreItem>) : BaseAdapter() {
+    var items: ArrayList<StoreItem> = _items
     override fun getCount(): Int {
         return items.size
     }
@@ -31,32 +22,20 @@ class StoreListAdapter(context: Context?) : BaseAdapter() {
         return position.toLong()
     }
 
-    fun removeItemAll() {
-        items.clear()
-        notifyDataSetChanged()
-    }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        var view = convertView
+        val context = parent?.context
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-        var view: StoreItemView? = null
-        view = if (convertView == null) {
-            StoreItemView(mContext!!)
-        } else {
-            convertView as StoreItemView
+        if (view == null) {
+            val vi = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = vi.inflate(R.layout.store_item, parent, false)
         }
 
-        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        val item = items[position]
-
-        //데이터 값 표시하기
-//        view.setName(item.storeName)
-//        view.setGrade(item.storeGrade)
-//        view.setDistance(item.storeDistance)
-//        view.setImage(item.storeLogo)
+        val storeName = view?.findViewById(R.id.storeName) as TextView
+        storeName.text = items[position].name
+        val storeGrade = view?.findViewById(R.id.storeGrade) as TextView
+        storeGrade.text = items[position].degree.toString()
 
         return view
-    }
-
-    companion object {
-        var items = ArrayList<StoreItem>()
     }
 }

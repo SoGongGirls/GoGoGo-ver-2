@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "309071335380",
+    "firebase_url": "https://gogogo-ver-2-default-rtdb.firebaseio.com",
+    "project_id": "gogogo-ver-2",
+    "storage_bucket": "gogogo-ver-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309071335380:android:264b127b7ea616e2411041",
+        "android_client_info": {
+          "package_name": "com.minseo.gogogo_ver2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309071335380-c62nmbfbej2nilmo9qkm6hfqi1m2gmvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNkFKU1uzftPUM94_Af7GVKDnBDhSV7PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309071335380-c62nmbfbej2nilmo9qkm6hfqi1m2gmvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
