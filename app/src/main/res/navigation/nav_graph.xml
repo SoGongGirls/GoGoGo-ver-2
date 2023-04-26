@@ -191,7 +191,7 @@
     <activity
         android:id="@+id/storeRecommend"
         android:name="com.minseo.gogogo_ver2.view.storeInfo.StoreRecommend"
-        android:label="StoreRecommend"
-        tools:layout="@layout/store_recommend"/>
+        android:label="store_recommend"
+        tools:layout="@layout/store_recommend" />
 
 </navigation>
