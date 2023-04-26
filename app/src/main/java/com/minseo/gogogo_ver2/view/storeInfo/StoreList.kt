@@ -1,26 +1,19 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.minseo.gogogo_ver2.DatabaseHelper
-import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
-import com.minseo.gogogo_ver2.databinding.SurveyMealBinding
 import java.util.*
-import kotlin.Comparator
-import kotlin.collections.ArrayList
 
 class StoreList : Fragment() {
     lateinit var binding: StoreListBinding
@@ -72,39 +65,6 @@ class StoreList : Fragment() {
             }
         })
 
-//        openDB()
-
-        // 리스트뷰 참조 및 Adapter 연결
-//        adapter = StoreListAdapter(activity)
-//        adapter!!.removeItemAll()
-
-        // 맨 처음 초기화 데이터 보여주기 (select)
-//        if (database != null) {
-//            val tableName = "store_data"
-//            val query = "select name, degree, id, logo, latitude, longitude, menu from $tableName"
-//            val cursor = database!!.rawQuery(query, null)
-//            Log.v("test", "조회된 데이터 수 : " + cursor.count)
-//            for (i in 0 until cursor.count) {
-//                cursor.moveToNext()
-//                val name = cursor.getString(0)
-//                val degree = cursor.getString(1)
-//                val id = cursor.getInt(2)
-//                val logo = cursor.getString(3)
-//                val latitude = cursor.getDouble(4)
-//                val longitude = cursor.getDouble(5)
-//                val menu = cursor.getString(6)
-//                menuList = menu.split(",").toTypedArray()
-//                val menuList2 = java.util.ArrayList(Arrays.asList(*menuList))
-//
-//                adapter!!.addItem(StoreItem(name, degree, id, logo, latitude, longitude))
-//            }
-//            cursor.close()
-//        } else {
-//            Log.e("test", "selectData() db없음.")
-//        }
-//        binding.list.adapter = adapter
-
-
 //        // 리스트 정렬 기능
 //        binding.button5.isSelected = true // 기본순 버튼 눌린 상태로 유지
 //
@@ -151,6 +111,19 @@ class StoreList : Fragment() {
 //            }
         return fragmentBinding.root
     }
+
+    // 원하는 위치에서 위치까지 거리를 계산해주는 함수
+//    fun getDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double) : Float{
+//        val myLoc = Location(LocationManager.NETWORK_PROVIDER)
+//        val targetLoc = Location(LocationManager.NETWORK_PROVIDER)
+//        myLoc.latitude= lat1
+//        myLoc.longitude = lng1
+//
+//        targetLoc.latitude= lat2
+//        targetLoc.longitude = lng2
+//
+//        return myLoc.distanceTo(targetLoc)
+//    }
 
 //    @Override
 //    public void onListItemClick (ListView l, View v, int position, long id) {

@@ -33,7 +33,7 @@ class StoreListAdapter(_items: ArrayList<StoreItem>) : BaseAdapter() {
 
         val storeName = view?.findViewById(R.id.storeName) as TextView
         storeName.text = items[position].name
-        val storeGrade = view?.findViewById(R.id.storeGrade) as TextView
+        val storeGrade = view.findViewById(R.id.storeGrade) as TextView
         storeGrade.text = items[position].degree.toString()
 
         return view
