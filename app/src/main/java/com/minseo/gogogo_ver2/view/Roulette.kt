@@ -27,7 +27,6 @@ class Roulette : Fragment() {
     private lateinit var binding: RouletteBinding
     private val sharedViewModel: SurveyViewModel by activityViewModels()
 
-//    private val rouletteData = sharedViewModel.pickedOption
     private val rouletteData = listOf("닭백숙", "치킨", "닭도리탕", "찜닭", "닭발", "닭갈비")
 
     @SuppressLint("SetTextI18n")
@@ -51,6 +50,11 @@ class Roulette : Fragment() {
         binding.roulette.apply {
             rouletteSize = rouletteData.size
             setRouletteDataList(rouletteData)
+        }
+
+        sharedViewModel.picked.observe(viewLifecycleOwner) {
+            binding.roulette.rouletteSize = it.size
+            binding.roulette.setRouletteDataList(it)
         }
 
         binding.rotateBtn.setOnClickListener { rotateRoulette() }
