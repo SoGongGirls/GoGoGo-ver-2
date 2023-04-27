@@ -25,7 +25,7 @@ import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 
 class Roulette : Fragment() {
     private lateinit var binding: RouletteBinding
-    private val sharedViewModel: SurveyViewModel by activityViewModels()
+    private val surveyViewModel: SurveyViewModel by activityViewModels()
 
     private val rouletteData = listOf("닭백숙", "치킨", "닭도리탕", "찜닭", "닭발", "닭갈비")
 
@@ -52,7 +52,7 @@ class Roulette : Fragment() {
             setRouletteDataList(rouletteData)
         }
 
-        sharedViewModel.picked.observe(viewLifecycleOwner) {
+        surveyViewModel.picked.observe(viewLifecycleOwner) {
             binding.roulette.rouletteSize = it.size
             binding.roulette.setRouletteDataList(it)
         }
@@ -61,7 +61,7 @@ class Roulette : Fragment() {
 
         // 내 주변 매장 확인하기
         binding.resultBtn.setOnClickListener {
-            sharedViewModel.setRoulette(binding.rotateResultTv.text as String)
+            surveyViewModel.setRoulette(binding.rotateResultTv.text as String)
             findNavController().navigate(R.id.action_roulette_to_storeRecommend)
         }
 

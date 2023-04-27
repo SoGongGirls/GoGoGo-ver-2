@@ -1,28 +1,30 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.activityViewModels
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
+import com.minseo.gogogo_ver2.model.StoreItem
+import com.minseo.gogogo_ver2.view_model.StoreViewModel
+import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 import java.util.*
 
 class StoreList : Fragment() {
     lateinit var binding: StoreListBinding
 
-    val database = Firebase.database
-    val myRef = database.getReference("store")
-
     lateinit var storeList: ArrayList<StoreItem>
     lateinit var adapter: StoreListAdapter
+
+    private val surveyViewModel: SurveyViewModel by activityViewModels()
+    private val storeViewModel: StoreViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        storeViewModel.fetchFirebaseData()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,33 +39,12 @@ class StoreList : Fragment() {
         adapter = StoreListAdapter(storeList)
         storeLv.adapter = adapter
 
-        myRef.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    when {
-                        "삼겹살".equals(ds.key) -> {
-                            val f1 = snapshot.child("삼겹살")
-                            for (item in f1.children) {
-                                val id : String = item.key.toString()
-                                val name : String = item.child("name").value as String
-                                val degree : Double = item.child("degree").value as Double
-                                val logo : String = item.child("logo").value as String
-                                val latitude : Double = item.child("latitude").value as Double
-                                val longitude : Double = item.child("longitude").value as Double
+//        surveyViewModel.result.observe(viewLifecycleOwner) {
+//        }
 
-                                val f1m = StoreItem(id, name, degree, logo, latitude, longitude)
-                                storeList.add(f1m)
-                            }
-                        }
-                    }
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 읽어오기에 실패했을 때
-            }
-        })
+        storeViewModel.storeData.observe(viewLifecycleOwner) {
+            adapter.updateList(it)
+        }
 
 //        // 리스트 정렬 기능
 //        binding.button5.isSelected = true // 기본순 버튼 눌린 상태로 유지
@@ -135,9 +116,4 @@ class StoreList : Fragment() {
 //        String logoStr = item.getStoreLogo();
 //
 //    }
-//
-//    public void addItem(Drawable image, String name, String grade, String distance) {
-//        adapter.addItem(image, name, grade, distance);
-//    }
-
 }

@@ -1,28 +1,14 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.DeliveryListBinding
-import com.minseo.gogogo_ver2.databinding.StoreListBinding
-import com.minseo.gogogo_ver2.databinding.SurveyMealBinding
-import java.util.*
-import kotlin.Comparator
-import kotlin.collections.ArrayList
+import com.minseo.gogogo_ver2.model.StoreItem
 
 class DeliveryList : Fragment() {
     lateinit var binding: DeliveryListBinding

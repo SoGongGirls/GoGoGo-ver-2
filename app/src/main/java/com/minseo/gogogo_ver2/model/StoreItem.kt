@@ -1,4 +1,4 @@
-package com.minseo.gogogo_ver2.view.storeInfo
+package com.minseo.gogogo_ver2.model
 
 class StoreItem {
     var id: String = ""

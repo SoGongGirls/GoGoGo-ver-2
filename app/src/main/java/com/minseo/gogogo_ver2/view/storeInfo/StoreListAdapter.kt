@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.minseo.gogogo_ver2.R
+import com.minseo.gogogo_ver2.model.StoreItem
 
 class StoreListAdapter(_items: ArrayList<StoreItem>) : BaseAdapter() {
     var items: ArrayList<StoreItem> = _items
@@ -37,5 +38,10 @@ class StoreListAdapter(_items: ArrayList<StoreItem>) : BaseAdapter() {
         storeGrade.text = items[position].degree.toString()
 
         return view
+    }
+
+    fun updateList(newItems: List<StoreItem>) {
+        items = ArrayList(newItems)
+        notifyDataSetChanged()
     }
 }
