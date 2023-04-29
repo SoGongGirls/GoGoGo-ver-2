@@ -10,47 +10,38 @@
             type="com.minseo.gogogo_ver2.MainActivity" />
     </data>
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_new"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:background="@color/white"
-                app:itemIconTint="@drawable/bottom_icon_color"
-                app:itemTextColor="@drawable/bottom_icon_color"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/menu_bottom" />
-
-        </FrameLayout>
-
-        <!--  서랍 기능의 레이아웃  -->
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/drawer"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/menu_drawer" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/onestore"
+            android:text="설문조사와 룰렛으로\n오늘 메뉴 추천받기"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/bt_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.889" />
+
+        <android.widget.Button
+            android:id="@+id/bt_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="280dp"
+            android:background="#F8730A"
+            android:fontFamily="@font/kopubworld_dotum_pro_medium"
+            android:text="시작하기"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
