@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -61,8 +62,13 @@ class Roulette : Fragment() {
 
         // 내 주변 매장 확인하기
         binding.resultBtn.setOnClickListener {
-            surveyViewModel.setRoulette(binding.rotateResultTv.text as String)
-            findNavController().navigate(R.id.action_roulette_to_storeRecommend)
+            val result = binding.rotateResultTv.text.toString().trim().split(":").getOrNull(1)?.trim()
+            if (result?.isNotEmpty() != true) return@setOnClickListener
+
+            findNavController().navigate(
+                R.id.action_roulette_to_storeRecommend,
+                bundleOf("result" to result)
+            )
         }
 
         return fragmentBinding.root
