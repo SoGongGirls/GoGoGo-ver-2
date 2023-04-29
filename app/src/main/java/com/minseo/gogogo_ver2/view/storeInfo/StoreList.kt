@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
 import com.minseo.gogogo_ver2.model.StoreItem
+import com.minseo.gogogo_ver2.view_model.LocationViewModel
 import com.minseo.gogogo_ver2.view_model.StoreViewModel
 import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 import java.util.*
@@ -20,6 +22,7 @@ class StoreList : Fragment() {
 
     private val surveyViewModel: SurveyViewModel by activityViewModels()
     private val storeViewModel: StoreViewModel by activityViewModels()
+    private val locationViewModel : LocationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,18 +96,7 @@ class StoreList : Fragment() {
         return fragmentBinding.root
     }
 
-    // 원하는 위치에서 위치까지 거리를 계산해주는 함수
-//    fun getDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double) : Float{
-//        val myLoc = Location(LocationManager.NETWORK_PROVIDER)
-//        val targetLoc = Location(LocationManager.NETWORK_PROVIDER)
-//        myLoc.latitude= lat1
-//        myLoc.longitude = lng1
-//
-//        targetLoc.latitude= lat2
-//        targetLoc.longitude = lng2
-//
-//        return myLoc.distanceTo(targetLoc)
-//    }
+
 
 //    @Override
 //    public void onListItemClick (ListView l, View v, int position, long id) {

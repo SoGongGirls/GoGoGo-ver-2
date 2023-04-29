@@ -1,21 +1,42 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.minseo.gogogo_ver2.MainActivity
 import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreRecommendBinding
+import com.minseo.gogogo_ver2.view_model.GpsUtils
+import com.minseo.gogogo_ver2.view_model.LocationViewModel
 
 class StoreRecommend : AppCompatActivity() {
+
+    private lateinit var locationViewModel: LocationViewModel
+    private var isGPSEnabled = false
+    private lateinit var binding: StoreRecommendBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var binding = StoreRecommendBinding.inflate(layoutInflater)
+        binding = StoreRecommendBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+        GpsUtils(this).turnGPSOn(object : GpsUtils.OnGpsListener {
+
+            override fun gpsStatus(isGPSEnable: Boolean) {
+                this@StoreRecommend.isGPSEnabled = isGPSEnable
+            }
+        })
 
         var storeList = StoreList()
         var deliveryList = DeliveryList()
@@ -46,11 +67,82 @@ class StoreRecommend : AppCompatActivity() {
         })
     }
 
-    // 뒤로가기 버튼 눌렀을때, 홈화면으로 이동하기
-    override fun onBackPressed() {
-        val intent = Intent(this@StoreRecommend, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        finish()
+    override fun onStart() {
+        super.onStart()
+        invokeLocationAction()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GPS_REQUEST) {
+                isGPSEnabled = true
+                invokeLocationAction()
+            }
+        }
+    }
+
+    private fun invokeLocationAction() {
+        when {
+            !isGPSEnabled -> binding.latLong.text = getString(R.string.enable_gps)
+
+            isPermissionsGranted() -> startLocationUpdate()
+
+            shouldShowRequestPermissionRationale() -> binding.latLong.text = getString(R.string.permission_request)
+
+            else -> ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_REQUEST
+            )
+        }
+    }
+
+    private fun startLocationUpdate() {
+        locationViewModel.getLocationData().observe(this, Observer {
+            binding.latLong.text =  getString(R.string.latLong, it.longitude, it.latitude)
+            Log.v("longitude", it.longitude.toString())
+            Log.v("latitude", it.latitude.toString())
+        })
+    }
+
+    private fun isPermissionsGranted() =
+        ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+
+    private fun shouldShowRequestPermissionRationale() =
+        ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) && ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_REQUEST -> {
+                invokeLocationAction()
+            }
+        }
+    }
+
+    // 뒤로가기 버튼 눌렀을때, 홈화면으로 이동하기
+//    override fun onBackPressed() {
+//        val intent = Intent(this@StoreRecommend, MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        ContextCompat.startActivity(intent)
+//        finish()
+//    }
 }
+
+const val LOCATION_REQUEST = 100
+const val GPS_REQUEST = 101
