@@ -1,28 +1,62 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
 import com.minseo.gogogo_ver2.model.StoreItem
+import com.minseo.gogogo_ver2.view_model.LocationModel
 import com.minseo.gogogo_ver2.view_model.LocationViewModel
 import com.minseo.gogogo_ver2.view_model.StoreViewModel
-import com.minseo.gogogo_ver2.view_model.SurveyViewModel
+import kotlinx.coroutines.flow.combine
 import java.util.*
 
 class StoreList : Fragment() {
     lateinit var binding: StoreListBinding
 
-    lateinit var storeList: ArrayList<StoreItem>
     lateinit var adapter: StoreListAdapter
 
-    private val surveyViewModel: SurveyViewModel by activityViewModels()
     private val storeViewModel: StoreViewModel by activityViewModels()
-    private val locationViewModel : LocationViewModel by activityViewModels()
+    private val locationViewModel: LocationViewModel by activityViewModels()
+
+    // 가게 정보 또는 현재 위치가 변경될 때마다 RecyclerView 의 데이터를 다시 계산
+    private val storeItems by lazy {
+        combine(
+            listOf(
+                storeViewModel.storeData.asFlow(),
+                locationViewModel.getLocationData().asFlow()
+            )
+        ) {
+            val items = it[0] as? List<StoreItem>
+            val location = it[1] as? LocationModel
+
+            if (items == null || items.isEmpty() || location == null) {
+                return@combine items ?: Collections.emptyList<StoreItem>()
+            } else {
+                items.forEach {
+                    it.distance = run {
+                        val l1 = Location("l1").apply {
+                            latitude = it.latitude
+                            longitude = it.longitude
+                        }
+                        val l2 = Location("l2").apply {
+                            latitude = location.latitude
+                            longitude = location.longitude
+                        }
+                        l1.distanceTo(l2).toDouble()
+                    }
+                }
+
+                return@combine items
+            }
+        }.asLiveData()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +70,14 @@ class StoreList : Fragment() {
         val fragmentBinding = StoreListBinding.inflate(inflater, container, false)
         binding = fragmentBinding
 
-        storeList = ArrayList()
-
-        var storeLv = binding.list
-        adapter = StoreListAdapter(storeList)
-        storeLv.adapter = adapter
+        adapter = StoreListAdapter()
+        binding.list.adapter = adapter
 
 //        surveyViewModel.result.observe(viewLifecycleOwner) {
 //        }
 
-        storeViewModel.storeData.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+        storeItems.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
 //        // 리스트 정렬 기능
@@ -95,7 +126,6 @@ class StoreList : Fragment() {
 //            }
         return fragmentBinding.root
     }
-
 
 
 //    @Override

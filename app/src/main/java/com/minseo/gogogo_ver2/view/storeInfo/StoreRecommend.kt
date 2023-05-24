@@ -6,33 +6,46 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
-import com.minseo.gogogo_ver2.MainActivity
 import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreRecommendBinding
 import com.minseo.gogogo_ver2.view_model.GpsUtils
 import com.minseo.gogogo_ver2.view_model.LocationViewModel
+import com.minseo.gogogo_ver2.view_model.StoreViewModel
 
 class StoreRecommend : AppCompatActivity() {
+    private val storeViewModel: StoreViewModel by viewModels()
+    private val locationViewModel: LocationViewModel by viewModels()
 
-    private lateinit var locationViewModel: LocationViewModel
     private var isGPSEnabled = false
     private lateinit var binding: StoreRecommendBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var result = intent?.getStringExtra("result")
+
+        if (savedInstanceState != null) {
+            result = savedInstanceState.getString("result")
+        }
+
+        if (result?.isNotBlank() != true) {
+            finish()
+            return
+        }
+
+        storeViewModel.result = result
+        Log.d("StoreRecommend", result)
+
         binding = StoreRecommendBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
         GpsUtils(this).turnGPSOn(object : GpsUtils.OnGpsListener {
-
             override fun gpsStatus(isGPSEnable: Boolean) {
                 this@StoreRecommend.isGPSEnabled = isGPSEnable
             }
@@ -67,6 +80,11 @@ class StoreRecommend : AppCompatActivity() {
         })
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("result", storeViewModel.result)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onStart() {
         super.onStart()
         invokeLocationAction()
@@ -88,11 +106,15 @@ class StoreRecommend : AppCompatActivity() {
 
             isPermissionsGranted() -> startLocationUpdate()
 
-            shouldShowRequestPermissionRationale() -> binding.latLong.text = getString(R.string.permission_request)
+            shouldShowRequestPermissionRationale() -> binding.latLong.text =
+                getString(R.string.permission_request)
 
             else -> ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
                 LOCATION_REQUEST
             )
         }
@@ -100,7 +122,7 @@ class StoreRecommend : AppCompatActivity() {
 
     private fun startLocationUpdate() {
         locationViewModel.getLocationData().observe(this, Observer {
-            binding.latLong.text =  getString(R.string.latLong, it.longitude, it.latitude)
+            binding.latLong.text = getString(R.string.latLong, it.longitude, it.latitude)
             Log.v("longitude", it.longitude.toString())
             Log.v("latitude", it.latitude.toString())
         })
@@ -126,7 +148,11 @@ class StoreRecommend : AppCompatActivity() {
         )
 
     @SuppressLint("MissingPermission")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             LOCATION_REQUEST -> {

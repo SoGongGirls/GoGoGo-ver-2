@@ -1,47 +1,58 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.TextView
-import com.minseo.gogogo_ver2.R
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.minseo.gogogo_ver2.databinding.StoreItemBinding
 import com.minseo.gogogo_ver2.model.StoreItem
+import java.util.*
 
-class StoreListAdapter(_items: ArrayList<StoreItem>) : BaseAdapter() {
-    var items: ArrayList<StoreItem> = _items
-    override fun getCount(): Int {
-        return items.size
+class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHolder>(callback) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = StoreItemBinding.inflate(inflater, parent, false)
+        return StoreItemViewHolder(binding)
     }
 
-    override fun getItem(position: Int): Any {
-        return items[position]
-    }
+    override fun onBindViewHolder(holder: StoreItemViewHolder, position: Int) {
+        val item = getItem(position)
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+        with(holder.binding) {
+            storeName.text = item.name
+            storeGrade.text = item.degree.toString()
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var view = convertView
-        val context = parent?.context
-
-        if (view == null) {
-            val vi = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = vi.inflate(R.layout.store_item, parent, false)
+            if (item.distance > 1000) {
+                storeDistance.text =
+                    String.format(Locale.getDefault(), "거리: %.1fkm", item.distance / 1000)
+            } else {
+                storeDistance.text = String.format(Locale.getDefault(), "거리: %.2fm", item.distance)
+            }
         }
-
-        val storeName = view?.findViewById(R.id.storeName) as TextView
-        storeName.text = items[position].name
-        val storeGrade = view.findViewById(R.id.storeGrade) as TextView
-        storeGrade.text = items[position].degree.toString()
-
-        return view
     }
 
-    fun updateList(newItems: List<StoreItem>) {
-        items = ArrayList(newItems)
-        notifyDataSetChanged()
+    class StoreItemViewHolder(val binding: StoreItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+    companion object {
+        private val callback = object : DiffUtil.ItemCallback<StoreItem>() {
+            override fun areItemsTheSame(oldItem: StoreItem, newItem: StoreItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: StoreItem, newItem: StoreItem): Boolean {
+                return oldItem.name == newItem.name &&
+                        oldItem.degree == newItem.degree &&
+                        oldItem.logo == newItem.logo &&
+                        oldItem.latitude == newItem.latitude &&
+                        oldItem.longitude == newItem.longitude &&
+                        oldItem.distance == newItem.distance
+            }
+
+            override fun getChangePayload(oldItem: StoreItem, newItem: StoreItem): Any {
+                return Any()
+            }
+        }
     }
 }
