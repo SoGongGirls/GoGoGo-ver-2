@@ -19,7 +19,7 @@
             android:id="@+id/question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kopubworld_dotum_pro_medium"
+            android:fontFamily="@font/onestore"
             android:textStyle="bold"
             android:text="Q. 고기 VS 해산물 VS 향신료"
             android:layout_marginTop="70dp"

@@ -19,7 +19,7 @@
             android:id="@+id/question5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kopubworld_dotum_pro_medium"
+            android:fontFamily="@font/onestore"
             android:textStyle="bold"
             android:text="Q. 찬거 VS 따뜻한거"
             android:layout_marginTop="70dp"
