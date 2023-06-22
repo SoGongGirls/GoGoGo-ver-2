@@ -13,7 +13,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.google.android.gms.location.SettingsClient
-import com.minseo.gogogo_ver2.view.storeInfo.GPS_REQUEST
 
 class GpsUtils(private val context: Context) {
 
@@ -70,3 +69,5 @@ class GpsUtils(private val context: Context) {
         fun gpsStatus(isGPSEnable: Boolean)
     }
 }
+
+const val GPS_REQUEST = 101

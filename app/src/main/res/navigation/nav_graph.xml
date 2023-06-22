@@ -149,8 +149,8 @@
         android:label="roulette"
         tools:layout="@layout/roulette" >
         <action
-            android:id="@+id/action_roulette_to_storeRecommend"
-            app:destination="@id/storeRecommend" />
+            android:id="@+id/action_roulette_to_storeList"
+            app:destination="@id/storeList" />
     </fragment>
     <fragment
         android:id="@+id/surveyMealRice"
@@ -189,9 +189,9 @@
             app:destination="@id/roulette" />
     </fragment>
     <activity
-        android:id="@+id/storeRecommend"
-        android:name="com.minseo.gogogo_ver2.view.storeInfo.StoreRecommend"
-        android:label="store_recommend"
-        tools:layout="@layout/store_recommend" />
+        android:id="@+id/storeList"
+        android:name="com.minseo.gogogo_ver2.view.storeInfo.StoreList"
+        android:label="store_list"
+        tools:layout="@layout/store_list" />
 
 </navigation>

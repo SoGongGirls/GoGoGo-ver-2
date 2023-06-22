@@ -29,16 +29,6 @@ class SurveyMealMeat : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.surveyMeat = this
-
-        // 이미지뷰 동그랗게
-        binding?.btPork?.background ?: ShapeDrawable(OvalShape())
-        binding?.btPork?.clipToOutline ?: true
-        binding?.btSteak?.background ?: ShapeDrawable(OvalShape())
-        binding?.btSteak?.clipToOutline ?: true
-        binding?.btChicken?.background ?: ShapeDrawable(OvalShape())
-        binding?.btChicken?.clipToOutline ?: true
-        binding?.btElse?.background ?: ShapeDrawable(OvalShape())
-        binding?.btElse?.clipToOutline ?: true
     }
 
     fun pickPork() {

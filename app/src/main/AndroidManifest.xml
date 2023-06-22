@@ -28,8 +28,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".view.storeInfo.StoreRecommend"/>
         <activity android:name="com.minseo.gogogo_ver2.view.survey.SurveyStart" />
+        <activity android:name=".view.storeInfo.StoreList"/>
     </application>
 
 </manifest>

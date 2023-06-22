@@ -1,27 +1,17 @@
 package com.minseo.gogogo_ver2.view
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.jhdroid.view.RotateListener
-import com.jhdroid.view.Roulette
-import com.jhdroid.view.Roulette.Companion.ROULETTE_MAX_SIZE
-import com.jhdroid.view.Roulette.Companion.ROULETTE_MIN_SIZE
 import com.minseo.gogogo_ver2.R
-import com.minseo.gogogo_ver2.databinding.ActivityMainBinding
 import com.minseo.gogogo_ver2.databinding.RouletteBinding
-import com.minseo.gogogo_ver2.view.storeInfo.StoreRecommend
 import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 
 class Roulette : Fragment() {
@@ -66,7 +56,7 @@ class Roulette : Fragment() {
             if (result?.isNotEmpty() != true) return@setOnClickListener
 
             findNavController().navigate(
-                R.id.action_roulette_to_storeRecommend,
+                R.id.action_roulette_to_storeList,
                 bundleOf("result" to result)
             )
         }

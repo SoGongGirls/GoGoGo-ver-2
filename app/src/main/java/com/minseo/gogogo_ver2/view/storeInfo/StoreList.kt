@@ -1,30 +1,36 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
+import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
 import com.minseo.gogogo_ver2.model.StoreItem
-import com.minseo.gogogo_ver2.view_model.LocationModel
-import com.minseo.gogogo_ver2.view_model.LocationViewModel
-import com.minseo.gogogo_ver2.view_model.StoreViewModel
+import com.minseo.gogogo_ver2.view_model.*
 import kotlinx.coroutines.flow.combine
 import java.util.*
 
-class StoreList : Fragment() {
-    lateinit var binding: StoreListBinding
+class StoreList : AppCompatActivity() {
 
     lateinit var adapter: StoreListAdapter
 
-    private val storeViewModel: StoreViewModel by activityViewModels()
-    private val locationViewModel: LocationViewModel by activityViewModels()
+    private val storeViewModel: StoreViewModel by viewModels()
+    private val locationViewModel: LocationViewModel by viewModels()
 
+    private var isGPSEnabled = false
+    private lateinit var binding: StoreListBinding
+
+    // 액티비티 생명주기 = launched -> onCreate() -> onStart() -> onResume() -> running -> onPause() -> onStop() -> onDestroy()
     // 가게 정보 또는 현재 위치가 변경될 때마다 RecyclerView 의 데이터를 다시 계산
     private val storeItems by lazy {
         combine(
@@ -60,73 +66,120 @@ class StoreList : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        storeViewModel.fetchFirebaseData()
+
+        var result = intent?.getStringExtra("result")
+
+        if (savedInstanceState != null) {
+            result = savedInstanceState.getString("result")
+        }
+
+        if (result?.isNotBlank() != true) {
+            finish()
+            return
+        }
+
+        storeViewModel.result = result
+        Log.d("StoreList", result)
+
+        binding = StoreListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        GpsUtils(this).turnGPSOn(object : GpsUtils.OnGpsListener {
+            override fun gpsStatus(isGPSEnable: Boolean) {
+                this@StoreList.isGPSEnabled = isGPSEnable
+            }
+        })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val fragmentBinding = StoreListBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("result", storeViewModel.result)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        invokeLocationAction()
+
+        storeViewModel.fetchFirebaseData()
 
         adapter = StoreListAdapter()
         binding.list.adapter = adapter
 
-//        surveyViewModel.result.observe(viewLifecycleOwner) {
-//        }
-
-        storeItems.observe(viewLifecycleOwner) {
+        storeItems.observe(this, Observer {
             adapter.submitList(it)
-        }
-
-//        // 리스트 정렬 기능
-//        binding.button5.isSelected = true // 기본순 버튼 눌린 상태로 유지
-//
-//        binding.button3.setOnClickListener {   // 추천순
-//            binding.button5.isSelected = false
-//            binding.button4.isSelected = false
-//            binding.button3.isSelected = true
-//            val gradeDesc = Comparator<StoreItem> { o1, o2 ->
-//                var ret = 0
-//                ret =
-//                    if (o1.storeGrade.compareTo(o2.storeGrade) < 0) 1 else if (o1.storeGrade.compareTo(
-//                            o2.storeGrade
-//                        ) == 0
-//                    ) 0 else -1
-//                ret
-//            }
-//            Collections.sort(StoreListAdapter.items, gradeDesc)
-//            adapter!!.notifyDataSetChanged()
-//        }
-//        binding.button4.setOnClickListener {   // 거리순
-//            binding.button5.isSelected = false
-//            binding.button4.isSelected = true
-//            binding.button3.isSelected = false
-//            val distanceAsc = Comparator<StoreItem> { o1, o2 ->
-//                var ret = 0
-//                ret =
-//                    if (o1.storeDistance < o2.storeDistance) -1 else if (o1.storeDistance == o2.storeDistance) 0 else 1
-//                ret
-//            }
-//            Collections.sort(StoreListAdapter.items, distanceAsc)
-//            adapter!!.notifyDataSetChanged()
-//        }
-//
-//
-//        // 가게 정보 상세보기
-//        storeList!!.onItemClickListener =
-//            AdapterView.OnItemClickListener { adapterView, view, i, l ->
-//                val intent = Intent(activity, StoreDetail::class.java)
-//                val item = adapter!!.getItem(i) as StoreItem
-//                val id = item.storeId.toString()
-//                Log.v(TAG, "id는$id")
-//                intent.putExtra("id", id)
-//                startActivity(intent)
-//            }
-        return fragmentBinding.root
+        })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GPS_REQUEST) {
+                isGPSEnabled = true
+                invokeLocationAction()
+            }
+        }
+    }
+
+    private fun invokeLocationAction() {
+        when {
+            !isGPSEnabled -> binding.latLong.text = getString(R.string.enable_gps)
+
+            isPermissionsGranted() -> startLocationUpdate()
+
+            shouldShowRequestPermissionRationale() -> binding.latLong.text =
+                getString(R.string.permission_request)
+
+            else -> ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                LOCATION_REQUEST
+            )
+        }
+    }
+
+    private fun startLocationUpdate() {
+        locationViewModel.getLocationData().observe(this, Observer {
+            binding.latLong.text = getString(R.string.latLong, it.longitude, it.latitude)
+            Log.v("longitude", it.longitude.toString())
+            Log.v("latitude", it.latitude.toString())
+        })
+    }
+
+    private fun isPermissionsGranted() =
+        ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+
+    private fun shouldShowRequestPermissionRationale() =
+        ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) && ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_REQUEST -> {
+                invokeLocationAction()
+            }
+        }
+    }
 
 //    @Override
 //    public void onListItemClick (ListView l, View v, int position, long id) {
@@ -139,3 +192,5 @@ class StoreList : Fragment() {
 //
 //    }
 }
+
+const val LOCATION_REQUEST = 100
