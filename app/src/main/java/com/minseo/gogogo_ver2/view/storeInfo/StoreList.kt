@@ -108,6 +108,23 @@ class StoreList : AppCompatActivity() {
         storeItems.observe(this, Observer {
             adapter.submitList(it)
         })
+
+        // 기본순 버튼 눌린 상태로 유지
+        binding.btBasic.isSelected = true
+
+        // 추천순 버튼 눌렀을 때
+        binding.btRecom.setOnClickListener {
+            binding.btBasic.isSelected = false
+            binding.btWay.isSelected = false
+            binding.btRecom.isSelected = true
+        }
+
+        // 거리순 버튼 눌렀을 때
+        binding.btRecom.setOnClickListener {
+            binding.btBasic.isSelected = false
+            binding.btWay.isSelected = true
+            binding.btRecom.isSelected = false
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

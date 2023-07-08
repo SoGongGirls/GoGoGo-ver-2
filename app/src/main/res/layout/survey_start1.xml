@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:textColor="#000000"
             android:fontFamily="@font/onestore"
-            android:text="자, 설문을 시작하지.\n한 번 선택하면\n돌이킬 수 없다!"
+            android:text="내가 메뉴를 골라주지\n한 번 선택하면\n돌이킬 수 없다!"
             android:textSize="25dp" />
 
         <android.widget.Button

@@ -34,7 +34,7 @@
             android:orientation="horizontal">
 
             <android.widget.Button
-                android:id="@+id/button5"
+                android:id="@+id/bt_basic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -48,7 +48,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <android.widget.Button
-                android:id="@+id/button3"
+                android:id="@+id/bt_recom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -62,7 +62,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <android.widget.Button
-                android:id="@+id/button4"
+                android:id="@+id/bt_way"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
