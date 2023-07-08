@@ -11,14 +11,4 @@
         android:fontWeight="400"
         android:fontStyle="normal" />
 
-    <font
-        android:font="@font/elicedigitalbaeum_bold"
-        android:fontWeight="400"
-        android:fontStyle="normal" />
-
-    <font
-        android:font="@font/elicedigitalbaeum_regular"
-        android:fontWeight="400"
-        android:fontStyle="normal" />
-
 </font-family>
