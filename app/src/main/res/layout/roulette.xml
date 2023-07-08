@@ -19,6 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="메뉴 추천 결과! : "
+            android:fontFamily="@font/kopubworld_dotum_pro_medium"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
             app:layout_constraintBottom_toTopOf="@+id/roulette"
@@ -45,24 +47,38 @@
             android:id="@+id/button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="70dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.google.android.material.button.MaterialButton
+            <android.widget.Button
                 android:id="@+id/rotate_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="룰렛 돌리기"
+                android:text="룰렛 돌리고~"
+                android:textColor="@color/orange4"
+                android:textStyle="bold"
+                android:fontFamily="@font/kopubworld_dotum_pro_medium"
+                android:textSize="18dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_bt_2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/result_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="내 주변 매장"
+                android:text="내 주변 매장 확인 ㄱ"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:fontFamily="@font/kopubworld_dotum_pro_medium"
+                android:textSize="18dp"
+                android:background="@drawable/round_bt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rotate_btn" />
