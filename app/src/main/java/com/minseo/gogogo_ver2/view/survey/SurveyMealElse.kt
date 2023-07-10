@@ -1,7 +1,5 @@
 package com.minseo.gogogo_ver2.view.survey
 
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,16 +27,6 @@ class SurveyMealElse : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.surveyElse = this
-
-        // 이미지뷰 동그랗게
-        binding?.btOne?.background ?: ShapeDrawable(OvalShape())
-        binding?.btOne?.clipToOutline ?: true
-        binding?.btTwo?.background ?: ShapeDrawable(OvalShape())
-        binding?.btTwo?.clipToOutline ?: true
-        binding?.btThree?.background ?: ShapeDrawable(OvalShape())
-        binding?.btThree?.clipToOutline ?: true
-        binding?.btFour?.background ?: ShapeDrawable(OvalShape())
-        binding?.btFour?.clipToOutline ?: true
     }
 
     fun pickOne() {
@@ -56,7 +44,7 @@ class SurveyMealElse : Fragment() {
     }
 
     fun pickFour() {
-        var menu = arrayListOf("떡볶이", "만두", "튀김", "순대", "어묵")
+        var menu = arrayListOf("떡볶이", "만두", "튀김", "순대")
         sharedViewModel.setPick(menu)
         findNavController().navigate(R.id.action_surveyMealElse_to_roulette)
     }

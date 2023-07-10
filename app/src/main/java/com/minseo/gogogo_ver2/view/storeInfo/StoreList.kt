@@ -89,6 +89,13 @@ class StoreList : AppCompatActivity() {
                 this@StoreList.isGPSEnabled = isGPSEnable
             }
         })
+
+//        binding.run {
+//            val storeListAdapter = StoreListAdapter { item ->
+//                val name = item.name
+//                Log.e("TEST", "name : $name")
+//            }
+//        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -124,6 +131,10 @@ class StoreList : AppCompatActivity() {
             binding.btBasic.isSelected = false
             binding.btWay.isSelected = true
             binding.btRecom.isSelected = false
+        }
+
+        adapter.onItemClick = { item ->
+            Log.d("TEST", item.name)
         }
     }
 
@@ -197,17 +208,6 @@ class StoreList : AppCompatActivity() {
             }
         }
     }
-
-//    @Override
-//    public void onListItemClick (ListView l, View v, int position, long id) {
-//        StoreItem item = (StoreItem) l.getItemAtPosition(position) ;
-//
-//        String nameStr = item.getStoreName();
-//        String gradeStr = item.getStoreGrade();
-//    //        double distanceStr = item.getStoreDistance();
-//        String logoStr = item.getStoreLogo();
-//
-//    }
 }
 
 const val LOCATION_REQUEST = 100

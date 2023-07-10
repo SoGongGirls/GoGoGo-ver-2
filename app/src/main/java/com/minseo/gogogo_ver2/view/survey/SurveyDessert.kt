@@ -1,7 +1,5 @@
 package com.minseo.gogogo_ver2.view.survey
 
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,12 +27,6 @@ class SurveyDessert : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.surveyDessert = this
-
-        // 이미지뷰 동그랗게
-        binding.btGood.background ?: ShapeDrawable(OvalShape())
-        binding.btGood.clipToOutline ?: true
-        binding.btBad.background ?: ShapeDrawable(OvalShape())
-        binding.btBad.clipToOutline ?: true
     }
 
     fun pickGood() {

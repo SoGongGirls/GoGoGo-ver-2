@@ -2,6 +2,7 @@ package com.minseo.gogogo_ver2.view.storeInfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +12,13 @@ import java.util.*
 
 class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHolder>(callback) {
 
+    private lateinit var binding: StoreItemBinding
+    var onItemClick: ((StoreItem) -> Unit)? = null
+    var item: List<StoreItem> = emptyList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = StoreItemBinding.inflate(inflater, parent, false)
+        binding = StoreItemBinding.inflate(inflater, parent, false)
         return StoreItemViewHolder(binding)
     }
 
@@ -26,14 +31,22 @@ class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHo
 
             if (item.distance > 1000) {
                 storeDistance.text =
-                    String.format(Locale.getDefault(), "거리: %.1fkm", item.distance / 1000)
+                    String.format(Locale.getDefault(), "%.1fkm", item.distance / 1000)
             } else {
-                storeDistance.text = String.format(Locale.getDefault(), "거리: %.2fm", item.distance)
+                storeDistance.text = String.format(Locale.getDefault(), "%.2fm", item.distance)
             }
         }
     }
 
-    class StoreItemViewHolder(val binding: StoreItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class StoreItemViewHolder(val binding: StoreItemBinding) : RecyclerView.ViewHolder(binding.root) {
+//        val name: TextView = binding.storeName
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(item[adapterPosition])
+            }
+        }
+    }
 
     companion object {
         private val callback = object : DiffUtil.ItemCallback<StoreItem>() {
