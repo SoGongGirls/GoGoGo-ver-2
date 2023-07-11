@@ -1,8 +1,6 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,7 +9,9 @@ import com.minseo.gogogo_ver2.databinding.StoreItemBinding
 import com.minseo.gogogo_ver2.model.StoreItem
 import java.util.*
 
-class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHolder>(callback) {
+class StoreListAdapter(
+    private val clickListener: (StoreItem) -> Unit
+) : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHolder>(callback) {
 
     private lateinit var binding: StoreItemBinding
 
@@ -36,12 +36,16 @@ class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHo
             }
         }
 
-        // 어댑터 안에서 클릭 이벤트 처리
+//        // 어댑터 안에서 클릭 이벤트 처리
+//        binding.root.setOnClickListener {
+//            val name = item.name
+//            val tel = item.tel
+//            val address = item.address
+//            Log.e("Adapter", "$name, $tel, $address")
+//        }
+
         binding.root.setOnClickListener {
-            val name = item.name
-            val tel = item.tel
-            val address = item.address
-            Log.e("Adapter", "$name, $tel, $address")
+            clickListener(item)
         }
     }
 

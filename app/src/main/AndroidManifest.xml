@@ -28,6 +28,7 @@
             android:name=".MainActivity"
             android:exported="true"/>
         <activity android:name=".view.storeInfo.StoreList" />
+        <activity android:name=".view.storeInfo.StoreDetail"/>
     </application>
 
 </manifest>

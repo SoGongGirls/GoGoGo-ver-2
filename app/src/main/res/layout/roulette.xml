@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/rotate_result_tv"
@@ -20,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="메뉴 추천 결과! : "
             android:fontFamily="@font/kopubworld_dotum_pro_medium"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginStart="10dp"

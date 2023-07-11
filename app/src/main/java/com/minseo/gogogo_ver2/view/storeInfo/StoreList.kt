@@ -102,7 +102,18 @@ class StoreList : AppCompatActivity() {
 
         storeViewModel.fetchFirebaseData()
 
-        adapter = StoreListAdapter()
+        adapter = StoreListAdapter() { item ->
+            val intent = Intent(this@StoreList, StoreDetail::class.java)
+
+            intent.putExtra("storeName", item.name)
+            intent.putExtra("storeDegree", item.degree)
+            intent.putExtra("storeTel", item.tel)
+            intent.putExtra("storeAddress", item.address)
+            intent.putExtra("storeLet", item.latitude)
+            intent.putExtra("storeLong", item.longitude)
+
+            startActivity(intent)
+        }
         binding.list.adapter = adapter
 
         // 기본순 버튼 눌린 상태로 유지
@@ -207,6 +218,10 @@ class StoreList : AppCompatActivity() {
             }
         }
     }
+}
+
+private fun Intent.putExtra(s: String, detail: MutableList<Any>) {
+
 }
 
 const val LOCATION_REQUEST = 100
