@@ -33,12 +33,14 @@ class StoreViewModel : ViewModel() {
                             for (item in f1.children) {
                                 val id : String = item.key.toString()
                                 val name : String = item.child("name").value as String
+                                val address : String = item.child("address").value as String
                                 val degree : Double = item.child("degree").value as Double
                                 val logo : String = item.child("logo").value as String
                                 val latitude : Double = item.child("latitude").value as Double
                                 val longitude : Double = item.child("longitude").value as Double
+                                val tel : String = item.child("tel").value as String
 
-                                val f1m = StoreItem(id, name, degree, logo, latitude, longitude)
+                                val f1m = StoreItem(id, name, address, degree, logo, latitude, longitude, tel)
                                 newStoreData.add(f1m)
                             }
                         }

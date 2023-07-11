@@ -79,7 +79,7 @@ class StoreList : AppCompatActivity() {
         }
 
         storeViewModel.result = result
-        Log.d("StoreList", result)
+        Log.d("StoreList", result)   // 삼겹살 (룰렛 결과)
 
         binding = StoreListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -89,13 +89,6 @@ class StoreList : AppCompatActivity() {
                 this@StoreList.isGPSEnabled = isGPSEnable
             }
         })
-
-//        binding.run {
-//            val storeListAdapter = StoreListAdapter { item ->
-//                val name = item.name
-//                Log.e("TEST", "name : $name")
-//            }
-//        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -112,29 +105,39 @@ class StoreList : AppCompatActivity() {
         adapter = StoreListAdapter()
         binding.list.adapter = adapter
 
+        // 기본순 버튼 눌린 상태로 유지
+        binding.btBasic.isSelected = true
+
         storeItems.observe(this, Observer {
             adapter.submitList(it)
         })
-
-        // 기본순 버튼 눌린 상태로 유지
-        binding.btBasic.isSelected = true
 
         // 추천순 버튼 눌렀을 때
         binding.btRecom.setOnClickListener {
             binding.btBasic.isSelected = false
             binding.btWay.isSelected = false
             binding.btRecom.isSelected = true
+
+            storeItems.observe(this, Observer {
+                var sortedList: List<StoreItem> = it.sortedBy { -it.degree }
+                adapter.submitList(sortedList)
+            })
         }
 
         // 거리순 버튼 눌렀을 때
-        binding.btRecom.setOnClickListener {
+        binding.btWay.setOnClickListener {
             binding.btBasic.isSelected = false
             binding.btWay.isSelected = true
             binding.btRecom.isSelected = false
+
+            storeItems.observe(this, Observer {
+                var sortedList2: List<StoreItem> = it.sortedBy { it.distance }
+                adapter.submitList(sortedList2)
+            })
         }
 
         adapter.onItemClick = { item ->
-            Log.d("TEST", item.name)
+            Log.d("TEST", "${item.name}, ${item.tel}, ${item.address}")
         }
     }
 
