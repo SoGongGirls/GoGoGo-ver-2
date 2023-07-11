@@ -135,10 +135,6 @@ class StoreList : AppCompatActivity() {
                 adapter.submitList(sortedList2)
             })
         }
-
-        adapter.onItemClick = { item ->
-            Log.d("TEST", "${item.name}, ${item.tel}, ${item.address}")
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

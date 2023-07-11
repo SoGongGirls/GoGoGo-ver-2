@@ -1,8 +1,9 @@
 package com.minseo.gogogo_ver2.view.storeInfo
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,6 @@ import java.util.*
 class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHolder>(callback) {
 
     private lateinit var binding: StoreItemBinding
-    var onItemClick: ((StoreItem) -> Unit)? = null
-    var item: List<StoreItem> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,17 +35,17 @@ class StoreListAdapter : ListAdapter<StoreItem, StoreListAdapter.StoreItemViewHo
                 storeDistance.text = String.format(Locale.getDefault(), "%.2fm", item.distance)
             }
         }
-    }
 
-    inner class StoreItemViewHolder(val binding: StoreItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val name: TextView = binding.storeName
-
-        init {
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(item[adapterPosition])
-            }
+        // 어댑터 안에서 클릭 이벤트 처리
+        binding.root.setOnClickListener {
+            val name = item.name
+            val tel = item.tel
+            val address = item.address
+            Log.e("Adapter", "$name, $tel, $address")
         }
     }
+
+    class StoreItemViewHolder(val binding: StoreItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private val callback = object : DiffUtil.ItemCallback<StoreItem>() {
