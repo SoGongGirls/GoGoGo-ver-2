@@ -5,5 +5,6 @@
     <string name="start_survey">설문 시작</string>
     <string name="latLong">Longitude: %.3f, Latitude: %.3f</string>
     <string name="enable_gps">Please enable your gps</string>
+    <string name="tmap_api_key">p0i9kfjhb45CWiLbPZZHB53X4XuL0XvG2xCM8LbM</string>
     <string name="permission_request">App requires location permission</string>
 </resources>
