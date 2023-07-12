@@ -39,8 +39,9 @@ class StoreViewModel : ViewModel() {
                                 val latitude : Double = item.child("latitude").value as Double
                                 val longitude : Double = item.child("longitude").value as Double
                                 val tel : String = item.child("tel").value as String
+                                val photo : String = item.child("photo").value as String
 
-                                val f1m = StoreItem(id, name, address, degree, logo, latitude, longitude, tel)
+                                val f1m = StoreItem(id, name, address, degree, logo, latitude, longitude, tel, photo)
                                 newStoreData.add(f1m)
                             }
                         }

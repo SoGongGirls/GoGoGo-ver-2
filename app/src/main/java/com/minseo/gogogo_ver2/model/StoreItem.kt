@@ -10,8 +10,9 @@ class StoreItem {
     var longitude: Double = 0.0
     var distance: Double = 0.0
     var tel: String = ""
+    var photo: String = ""
 
-    constructor(_id: String, _name: String, _address: String, _degree: Double, _logo: String, _latitude: Double, _longitude: Double, _tel: String) {
+    constructor(_id: String, _name: String, _address: String, _degree: Double, _logo: String, _latitude: Double, _longitude: Double, _tel: String, _photo: String) {
         this.id = _id
         this.name = _name
         this.address = _address
@@ -20,5 +21,6 @@ class StoreItem {
         this.latitude = _latitude
         this.longitude = _longitude
         this.tel = _tel
+        this.photo = _photo
     }
 }

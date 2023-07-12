@@ -67,10 +67,11 @@
 
                 <TextView
                     android:id="@+id/storeDistance"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginRight="50dp"
                     android:textColor="#969696"
+                    android:gravity="right"
                     android:fontFamily="@font/kopubworld_dotum_pro_medium"
                     android:textSize="16sp"
                     android:text="거리" />

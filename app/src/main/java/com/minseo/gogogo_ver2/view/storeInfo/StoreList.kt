@@ -111,6 +111,7 @@ class StoreList : AppCompatActivity() {
             intent.putExtra("storeAddress", item.address)
             intent.putExtra("storeLet", item.latitude)
             intent.putExtra("storeLong", item.longitude)
+            intent.putExtra("storeImg", item.photo)
 
             startActivity(intent)
         }
