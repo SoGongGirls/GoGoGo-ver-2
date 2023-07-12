@@ -2,9 +2,6 @@ package com.minseo.gogogo_ver2.view.storeInfo
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.provider.ContactsContract.PinnedPositions.pin
-import android.util.Log
-import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
 import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreDetailBinding
@@ -22,9 +19,10 @@ class StoreDetail : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.storeName.setText(intent.getStringExtra("storeName"))
-        binding.storeGrade.setText(intent.getStringExtra("storeGrade"))
+        binding.storeGrade.setText(intent.getDoubleExtra("storeDegree", 0.0).toString())
         binding.storeTel.setText(intent.getStringExtra("storeTel"))
         binding.storeAddress.setText(intent.getStringExtra("storeAddress"))
+        binding.ratingBar.rating = intent.getDoubleExtra("storeDegree", 0.0).toFloat()
 
         val tMapView = TMapView(this)
         tMapView.setSKTMapApiKey(getString(R.string.tmap_api_key))
@@ -40,7 +38,5 @@ class StoreDetail : AppCompatActivity() {
         markerItem.setPosition(0.5f, 1.0f)
         markerItem.tMapPoint = tMapPoint
         tMapView.addMarkerItem("markerItem", markerItem)
-
-        Log.d("WHERE", "$lat, $long")
     }
 }
