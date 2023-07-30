@@ -30,9 +30,9 @@ def time_wait(num, code):
         driver.quit()
     return wait
 
-
 # css를 찾을때 까지 10초 대기
 time_wait(10, 'div.input_box > input.input_search')
+
 
 # 검색창 찾기
 search = driver.find_element(By.CSS_SELECTOR, 'div.input_box > input.input_search')
@@ -49,8 +49,6 @@ sleep(1)
 def switch_frame(frame):
     driver.switch_to.default_content()  # frame 초기화
     driver.switch_to.frame(frame)  # frame 변경
-    res
-    soup
 
 
 # 페이지 다운
@@ -60,16 +58,16 @@ def page_down(num):
     for i in range(num):
         body.send_keys(Keys.PAGE_DOWN)
 
-
 # frame 변경
 switch_frame('searchIframe')
 page_down(40)
 sleep(5)
 
+
 # 매장 리스트
-store_list = driver.find_elements(By.CSS_SELECTOR, '._1EKsQ')
+store_list = driver.find_elements(By.CSS_SELECTOR, '.UEzoS')
 # 페이지 리스트
-next_btn = driver.find_elements(By.CSS_SELECTOR, '._2ky45 > a')
+next_btn = driver.find_elements(By.CSS_SELECTOR, '.CHC5F > a')
 
 # dictionary 생성
 store_dict = {'매장정보': []}
@@ -80,25 +78,26 @@ print('[크롤링 시작...]')
 # 크롤링 (페이지 리스트 만큼)
 for btn in range(len(next_btn))[1:]:  # next_btn[0] = 이전 페이지 버튼 무시 -> [1]부터 시작
     for data in range(len(store_list)):  # 매장 리스트 만큼
-        page = driver.find_elements(By.CSS_SELECTOR, '.OXiLu')
+        page = driver.find_elements(By.CSS_SELECTOR, '.sub ng-star-inserted')
         page[data].click()
         sleep(2)
         try:
             # 상세 페이지로 이동
             switch_frame('entryIframe')
-            time_wait(5, '._3XamX')
+            time_wait(5, '.BXtr_')
+
             # 스크롤을 맨밑으로 1초간격으로 내린다.
             for down in range(3):
                 sleep(1)
                 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
             # -----매장명 가져오기-----
-            store_name = driver.find_element(By.CSS_SELECTOR, '._3XamX').text
+            store_name = driver.find_element(By.CSS_SELECTOR, '.Fc1rA').text
             print(store_rating)
 
             # -----평점-----
             try:
-                store_rating_list = driver.find_element(By.CSS_SELECTOR, '._1A8_M').text
+                store_rating_list = driver.find_element(By.CSS_SELECTOR, '.PXMot').text
                 store_rating = re.sub('별점', '', store_rating_list).replace('\n', '')  # 별점이라는 단어 제거
             except:
                 pass
@@ -106,32 +105,23 @@ for btn in range(len(next_btn))[1:]:  # next_btn[0] = 이전 페이지 버튼 �
 
             # -----주소(위치)-----
             try:
-                store_addr_list = driver.find_elements(By.CSS_SELECTOR, '._1aj6-')
+                store_addr_list = driver.find_elements(By.CSS_SELECTOR, '.vV_z_')
                 for i in store_addr_list:
-                    store_addr = i.find_element(By.CSS_SELECTOR, '._1h3B_').text
+                    store_addr = i.find_element(By.CSS_SELECTOR, '.LDgIH').text
             except:
                 pass
             print(store_addr)
 
             # -----전화번호 가져오기-----
             try:
-                store_tel = driver.find_element(By.CSS_SELECTOR, '._3ZA0S').text
+                store_tel = driver.find_element(By.CSS_SELECTOR, '.xlx7Q').text
             except:
                 pass
             print(store_tel)
 
-            # -----영업시간-----
-            try:
-                store_time_list = driver.find_elements(By.CSS_SELECTOR, '._2vK84')  # 아니 태그가 그세 바뀌네ㅡ,.ㅡ
-                for i in store_time_list:
-                    store_time = i.find_element(By.CSS_SELECTOR, '._3uEtO > time').text
-            except:
-                pass
-            print(store_time)
-
             # -----썸네일 사진 주소-----
             try:
-                thumb_list = driver.find_element(By.CSS_SELECTOR, '.cb7hz') \
+                thumb_list = driver.find_element(By.CSS_SELECTOR, '.K0PDV') \
                     .value_of_css_property('background-image')  # css 속성명을 찾는다
                 store_thumb = re.sub('url|"|\)|\(', '', thumb_list)  # url , (" ") 제거
             except:
@@ -144,7 +134,6 @@ for btn in range(len(next_btn))[1:]:  # next_btn[0] = 이전 페이지 버튼 �
                 'tel': store_tel,
                 'star': store_rating,
                 'addr': store_addr,
-                'time': store_time,
                 'thumb': store_thumb
             }
 
