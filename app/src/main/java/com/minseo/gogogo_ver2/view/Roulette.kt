@@ -1,13 +1,16 @@
 package com.minseo.gogogo_ver2.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jhdroid.view.RotateListener
 import com.minseo.gogogo_ver2.R
@@ -16,6 +19,7 @@ import com.minseo.gogogo_ver2.view_model.SurveyViewModel
 
 class Roulette : Fragment() {
     private lateinit var binding: RouletteBinding
+    private lateinit var callback: OnBackPressedCallback
     private val surveyViewModel: SurveyViewModel by activityViewModels()
 
     private val rouletteData = listOf("닭백숙", "치킨", "닭도리탕", "찜닭", "닭발", "닭갈비")
@@ -66,6 +70,21 @@ class Roulette : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Navigation.findNavController(binding.root).navigate(R.id.action_roulette_to_surveyStart1)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
     private fun rotateRoulette() {

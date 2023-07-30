@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
+import com.minseo.gogogo_ver2.MainActivity
 import com.minseo.gogogo_ver2.R
 import com.minseo.gogogo_ver2.databinding.StoreListBinding
 import com.minseo.gogogo_ver2.model.StoreItem
@@ -147,6 +148,11 @@ class StoreList : AppCompatActivity() {
                 adapter.submitList(sortedList2)
             })
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

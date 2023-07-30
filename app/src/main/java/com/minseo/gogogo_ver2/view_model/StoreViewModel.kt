@@ -1,7 +1,5 @@
 package com.minseo.gogogo_ver2.view_model
 
-import android.location.Location
-import android.location.LocationManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,19 +52,5 @@ class StoreViewModel : ViewModel() {
                 // 읽어오기에 실패했을 때
             }
         })
-    }
-
-
-    // 원하는 위치에서 위치까지 거리를 계산해주는 함수
-    fun getDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double) : Float{
-        val myLoc = Location(LocationManager.NETWORK_PROVIDER)
-        val targetLoc = Location(LocationManager.NETWORK_PROVIDER)
-        myLoc.latitude= lat1
-        myLoc.longitude = lng1
-
-        targetLoc.latitude= lat2
-        targetLoc.longitude = lng2
-
-        return myLoc.distanceTo(targetLoc)
     }
 }
