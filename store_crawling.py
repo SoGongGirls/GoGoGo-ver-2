@@ -1,59 +1,173 @@
-from selenium.webdriver.common.by import By
-from urllib3.util.retry import Retry
-from requests.adapters import HTTPAdapter
-from bs4 import BeautifulSoup
-from selenium import webdriver
-import re
-from selenium.webdriver.common.keys import Keys
 import time
-import requests
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+from bs4 import BeautifulSoup
+import re
+import json
 
-# 크롬 웹드라이버 불러오기
-driver = webdriver.Chrome()
-res = driver.get('https://m.place.naver.com/place/list?query=서울 삼겹살 맛집&level=top')
-driver.implicitly_wait(100)
+# --크롬창을 숨기고 실행-- driver에 options를 추가해주면된다
+# options = webdriver.ChromeOptions()
+# options.add_argument('headless')
 
-# 2차 크롤링을 위한 bs4 셋팅
-session = requests.Session()
-headers = {"User-Agent": "Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/"}
+url = 'https://map.naver.com/v5/search'
+driver = webdriver.Chrome()  # 드라이버 경로
+# driver = webdriver.Chrome('./chromedriver',chrome_options=options) # 크롬창 숨기기
+driver.get(url)
+key_word = '서울 삼겹살 맛집'  # 검색어
 
-retries = Retry(total=5,
-                backoff_factor=0.1,
-                status_forcelist=[500, 502, 503, 504])
 
-session.mount('https://', HTTPAdapter(max_retries=retries))
+# css 찾을때 까지 10초대기
+def time_wait(num, code):
+    try:
+        wait = WebDriverWait(driver, num).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, code)))
+    except:
+        print(code, '태그를 찾지 못하였습니다.')
+        driver.quit()
+    return wait
 
-# body부분을 잡기 위해 쓸데없이 버튼을 클릭해줌
-driver.find_element(By.XPATH, '//*[@id="_list_scroll_container"]/div/div/div[1]/div/div/a[2]').click()
-driver.find_element(By.XPATH, '//*[@id="_list_scroll_container"]/div/div/div[1]/div/div/a[1]').click()
 
-# 검색결과가 모두 보이지 않기 때문에 page down을 눌러 끝까지 펼쳐준다.
-for scroll in range(0,30):
-    driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-    time.sleep(0.2)
+# css를 찾을때 까지 10초 대기
+time_wait(10, 'div.input_box > input.input_search')
 
-html = driver.page_source
-bs = BeautifulSoup(html, 'html.parser')
-soup = bs.select_one('div.YluNG')
-naver_info = soup.select('li.VLTHu')
+# 검색창 찾기
+search = driver.find_element(By.CSS_SELECTOR, 'div.input_box > input.input_search')
+search.send_keys(key_word)  # 검색어 입력
+search.send_keys(Keys.ENTER)  # 엔터버튼 누르기
 
-# 2차 크롤링을 위한 url
-url = 'https://m.place.naver.com'
+res = driver.page_source  # 페이지 소스 가져오기
+soup = BeautifulSoup(res, 'html.parser')  # html 파싱하여  가져온다
 
-for info in naver_info:
-    store_name = info.select_one('div.C6RjW').text
-    store_cate = info.select_one('span.YzBgS').text
-    link = info.select_one('div.ouxiq').select_one('a').attrs['href']
-    time.sleep(0.06)
+sleep(1)
 
-    # 네이버 플레이스로 이동(place ID로 접속)
-    N_res = session.get(url+link, headers=headers)
-    N_soup_srch = BeautifulSoup(N_res.content, 'html.parser')
-    mart_oldtel = N_soup_srch.select_one('span.yxkiA > a').attrs['href']
-    store_tel = str(re.sub('tel:', '', mart_oldtel)) # 'tel:' 삭제
 
-    # 주소는 '공유'에서 파싱
-    address = N_soup_srch.select('span.yxkiA > a')[3].attrs['data-line-description']
+# frame 변경 메소드
+def switch_frame(frame):
+    driver.switch_to.default_content()  # frame 초기화
+    driver.switch_to.frame(frame)  # frame 변경
+    res
+    soup
 
-    print(store_name, '/', store_cate, '/', url+link, '/',  store_tel, '/', address)
-    time.sleep(0.06)
+
+# 페이지 다운
+def page_down(num):
+    body = driver.find_element(By.CSS_SELECTOR, 'body')
+    body.click()
+    for i in range(num):
+        body.send_keys(Keys.PAGE_DOWN)
+
+
+# frame 변경
+switch_frame('searchIframe')
+page_down(40)
+sleep(5)
+
+# 매장 리스트
+store_list = driver.find_elements(By.CSS_SELECTOR, '._1EKsQ')
+# 페이지 리스트
+next_btn = driver.find_elements(By.CSS_SELECTOR, '._2ky45 > a')
+
+# dictionary 생성
+store_dict = {'매장정보': []}
+# 시작시간
+start = time.time()
+print('[크롤링 시작...]')
+
+# 크롤링 (페이지 리스트 만큼)
+for btn in range(len(next_btn))[1:]:  # next_btn[0] = 이전 페이지 버튼 무시 -> [1]부터 시작
+    for data in range(len(store_list)):  # 매장 리스트 만큼
+        page = driver.find_elements(By.CSS_SELECTOR, '.OXiLu')
+        page[data].click()
+        sleep(2)
+        try:
+            # 상세 페이지로 이동
+            switch_frame('entryIframe')
+            time_wait(5, '._3XamX')
+            # 스크롤을 맨밑으로 1초간격으로 내린다.
+            for down in range(3):
+                sleep(1)
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+            # -----매장명 가져오기-----
+            store_name = driver.find_element(By.CSS_SELECTOR, '._3XamX').text
+            print(store_rating)
+
+            # -----평점-----
+            try:
+                store_rating_list = driver.find_element(By.CSS_SELECTOR, '._1A8_M').text
+                store_rating = re.sub('별점', '', store_rating_list).replace('\n', '')  # 별점이라는 단어 제거
+            except:
+                pass
+            print(store_rating)
+
+            # -----주소(위치)-----
+            try:
+                store_addr_list = driver.find_elements(By.CSS_SELECTOR, '._1aj6-')
+                for i in store_addr_list:
+                    store_addr = i.find_element(By.CSS_SELECTOR, '._1h3B_').text
+            except:
+                pass
+            print(store_addr)
+
+            # -----전화번호 가져오기-----
+            try:
+                store_tel = driver.find_element(By.CSS_SELECTOR, '._3ZA0S').text
+            except:
+                pass
+            print(store_tel)
+
+            # -----영업시간-----
+            try:
+                store_time_list = driver.find_elements(By.CSS_SELECTOR, '._2vK84')  # 아니 태그가 그세 바뀌네ㅡ,.ㅡ
+                for i in store_time_list:
+                    store_time = i.find_element(By.CSS_SELECTOR, '._3uEtO > time').text
+            except:
+                pass
+            print(store_time)
+
+            # -----썸네일 사진 주소-----
+            try:
+                thumb_list = driver.find_element(By.CSS_SELECTOR, '.cb7hz') \
+                    .value_of_css_property('background-image')  # css 속성명을 찾는다
+                store_thumb = re.sub('url|"|\)|\(', '', thumb_list)  # url , (" ") 제거
+            except:
+                pass
+            print(store_thumb)
+
+            # ---- dict에 데이터 집어넣기----
+            dict_temp = {
+                'name': store_name,
+                'tel': store_tel,
+                'star': store_rating,
+                'addr': store_addr,
+                'time': store_time,
+                'thumb': store_thumb
+            }
+
+            store_dict['매장정보'].append(dict_temp)
+
+            print(f'{store_name} ...완료')
+            switch_frame('searchIframe')
+            sleep(1)
+
+        except:
+            print('ERROR!' * 3)
+
+    # 다음 페이지 버튼
+    if page[-1]:  # 마지막 매장일 경우 다음버튼 클릭
+        next_btn[-1].click()
+        sleep(2)
+    else:
+        print('페이지 인식 못함')
+        break
+
+print('[데이터 수집 완료]\n소요 시간 :', time.time() - start)
+driver.quit()  # 작업이 끝나면 창을닫는다.
+
+# json 파일로 저장
+with open('store_data_1.json', 'w', encoding='utf-8') as f:
+    json.dump(store_dict, f, indent=4, ensure_ascii=False)
