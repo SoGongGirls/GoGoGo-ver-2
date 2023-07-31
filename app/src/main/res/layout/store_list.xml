@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.storeInfo.StoreList">
 
-    <data>
-        <variable
-            name="storeLists"
-            type="com.minseo.gogogo_ver2.view.storeInfo.StoreList" />
-    </data>
-
     <LinearLayout
         android:id="@+id/storeLayout"
         android:layout_width="match_parent"
@@ -75,15 +69,26 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="TextContrastCheck" />
-
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/store_item" />
+            android:layout_height="match_parent">
 
+            <ImageButton
+                android:id="@+id/bt_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/refresh" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/store_item" />
+        </FrameLayout>
     </LinearLayout>
 </layout>

@@ -85,6 +85,13 @@ class StoreList : AppCompatActivity() {
         binding = StoreListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 새로고침 버튼
+        binding.btRefresh.setOnClickListener {
+            finish()
+            startActivity(intent)
+            overridePendingTransition(0, 1)
+        }
+
         GpsUtils(this).turnGPSOn(object : GpsUtils.OnGpsListener {
             override fun gpsStatus(isGPSEnable: Boolean) {
                 this@StoreList.isGPSEnabled = isGPSEnable
@@ -225,10 +232,6 @@ class StoreList : AppCompatActivity() {
             }
         }
     }
-}
-
-private fun Intent.putExtra(s: String, detail: MutableList<Any>) {
-
 }
 
 const val LOCATION_REQUEST = 100
