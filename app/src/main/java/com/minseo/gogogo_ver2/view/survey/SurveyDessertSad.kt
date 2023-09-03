@@ -51,12 +51,12 @@ class SurveyDessertSad : Fragment() {
     fun pickHot() {
         var menu = arrayListOf("빵", "도넛", "마카롱", "케이크", "와플")
         sharedViewModel.setPick(menu)
-        findNavController().navigate(R.id.action_surveyMeal_to_roulette)
+        findNavController().navigate(R.id.action_surveyDessertSad_to_roulette)
     }
 
     fun pickCold() {
         var menu = arrayListOf("아이스크림", "빙수", "밀크쉐이크", "젤라또")
         sharedViewModel.setPick(menu)
-        findNavController().navigate(R.id.action_surveyMeal_to_roulette)
+        findNavController().navigate(R.id.action_surveyDessertSad_to_roulette)
     }
 }

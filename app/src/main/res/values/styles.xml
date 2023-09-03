@@ -5,4 +5,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/kopubworld_dotum_pro_medium</item>
     </style>
+
+    <style name="AppCompatAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.minseo.gogogo_ver2.view
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ class Roulette : Fragment() {
 
         override fun onRotateEnd(result: String) {
             binding.rotateResultTv.text = "메뉴 추천 결과! : $result"
+            RouletteDialog(result).show(childFragmentManager, "RouletteDialog")
         }
     }
 
