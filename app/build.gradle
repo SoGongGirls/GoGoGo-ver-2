@@ -12,8 +12,8 @@ android {
         applicationId "com.minseo.gogogo_ver2"
         minSdk 22
         targetSdk 33
-        versionCode 3
-        versionName "2.2"
+        versionCode 4
+        versionName "2.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,7 +58,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     // Roulette
-    implementation 'com.github.JhDroid:android-roulette-wheel-view:1.0.2'
+    implementation 'com.github.JhDroid:android-roulette-wheel-view:1.0.3'
 
     // Google play service
     implementation 'com.google.android.gms:play-services-location:21.0.1'
